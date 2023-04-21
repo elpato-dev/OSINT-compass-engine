@@ -23,13 +23,20 @@ def require_api_key(view_function):
     return decorated_function
 
 # API definition
+
+@app.route('/', methods=['GET'])
+def home_endpoint():
+    return("This is the OSINT-compass API")
+
 @app.route('/term', methods=['GET'])
 @require_api_key
 def term_endpoint():
     term = request.args.get('term')
+    news_count = request.args.get('news_count', default=10)
+    tweet_count = request.args.get('tweet_count', default=10)
     if not term:
         return jsonify({'error': 'term argument is required.'}), 400
-    result = get_term_data(term)
+    result = get_term_data(term, news_count=news_count, tweet_count=tweet_count)
     return jsonify(result)
 
 @app.route('/domain', methods=['GET'])
@@ -70,5 +77,4 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 # Remove before deploying to render
 #if __name__ == '__main__':
-
 #    app.run()
