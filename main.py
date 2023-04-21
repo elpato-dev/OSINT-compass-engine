@@ -17,7 +17,6 @@ API_KEY = os.getenv("API_KEY")
 def require_api_key(view_function):
     @wraps(view_function)
     def decorated_function(*args, **kwargs):
-        print(API_KEY)
         if request.args.get('apikey') != API_KEY:
             return jsonify({'error': 'Invalid API key.'}), 403
         return view_function(*args, **kwargs)
