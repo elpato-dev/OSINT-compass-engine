@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from emailgetter import get_email_data
 from domaingetter import get_domain_data
 from termgetter import get_term_data
+from snscraper import get_snc_twitter_results, get_snc_facebook_results
 from alertsetter import set_alert
 
 # API Key functionality
@@ -23,7 +24,6 @@ def require_api_key(view_function):
     return decorated_function
 
 # API definition
-
 @app.route('/', methods=['GET'])
 def home_endpoint():
     return("This is the OSINT-compass API")
@@ -73,8 +73,41 @@ def alert_endpoint():
     result = set_alert(term, channel, contact, scoregt, scorelt, scorechange)
     return jsonify(result)
 
+@app.route('/snscrape', methods=['GET'])
+@require_api_key
+def snscrape():
+    term = request.args.get('term')
+    if not term:
+        return "A term must be specified."
+
+    entries = request.args.get('entries')
+    if not entries:
+        entries = 10
+    else:
+        entries = int(entries)
+
+    twitter = request.args.get('twitter')
+    if twitter and twitter.lower() == 'true':
+        twitter = True
+    else:
+        twitter = False
+
+    facebook = request.args.get('facebook')
+    if facebook and facebook.lower() == 'true':
+        facebook = True
+    else:
+        facebook = False
+
+    results = []
+    if twitter:
+        results.extend(get_snc_twitter_results(term, entries))
+    if facebook:
+        results.extend(get_snc_facebook_results(term, entries))
+
+    return jsonify(results)
+
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 # Remove before deploying to render
-#if __name__ == '__main__':
-#    app.run()
+if __name__ == '__main__':
+    app.run()
