@@ -1,5 +1,7 @@
 import nltk
 
+nltk.download('punkt')
+
 def get_common_words(text_list):
 
     # Process the articles
