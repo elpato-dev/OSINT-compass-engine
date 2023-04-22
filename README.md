@@ -4,6 +4,8 @@
 
 OSINT-Compass is an API that provides open-source intelligence (OSINT) information by aggregating data from various sources such as term searches, domain information, email data, and social media.
 
+The main project can be found [here](https://github.com/elpato-dev/OSINT-compass)
+
 ## Getting Started
 
 In order to use the API, you will need a valid API key. The API key is passed as a query parameter in every request.
