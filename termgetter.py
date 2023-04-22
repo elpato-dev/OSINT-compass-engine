@@ -10,12 +10,15 @@ def get_term_data(term, tweet_count=10, news_count=10):
     tweets_sentiment = 0
     articles_sentiment = 0
 
-    for tweet in tweets_raw:
+    if tweets_raw != {}:
+        for tweet in tweets_raw:
 
-        tweets_sentiment = tweets_sentiment + get_text_sentiment(tweet)
+            tweets_sentiment = tweets_sentiment + get_text_sentiment(tweet)
 
-    tweets = {"tweets_text": tweets_raw,
-              "sentiment": tweets_sentiment/tweet_count}
+        tweets = {"tweets_text": tweets_raw,
+                "sentiment": tweets_sentiment/tweet_count}
+    else:
+        tweets = {}
     
     for article in news_raw["articles"]:
         articles_sentiment = articles_sentiment + get_text_sentiment(article["content"])

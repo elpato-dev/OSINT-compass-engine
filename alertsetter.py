@@ -13,7 +13,7 @@ db_host = os.getenv('DB_HOST')
 db_port = os.getenv('DB_PORT')
 
 
-def set_alert(term, channel, contact, scoregt=None, scorelt=None, scorechange=None):
+def set_alert(term, channel, contact, scoregt=None, scorelt=None):
     try:
         # Establish a connection to the database
         conn = psycopg2.connect(
@@ -28,8 +28,8 @@ def set_alert(term, channel, contact, scoregt=None, scorelt=None, scorechange=No
         cur = conn.cursor()
 
         # Insert a new row into the "alerts" table
-        cur.execute("INSERT INTO alerts (term, scorelt, contact_method, contact_details) VALUES (%s, %s, %s, %s)",
-                    (term, channel, contact, scoregt, scorelt, scorechange))
+        cur.execute("INSERT INTO alerts (term, contact_method, contact_details, scoregt, scorelt) VALUES (%s, %s, %s, %s, %s)",
+                    (term, channel, contact, scoregt, scorelt))
 
         # Commit the transaction to save the changes
         conn.commit()
@@ -40,3 +40,4 @@ def set_alert(term, channel, contact, scoregt=None, scorelt=None, scorechange=No
     
     except:
         return("An error occured")
+    

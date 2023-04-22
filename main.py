@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from emailgetter import get_email_data
 from domaingetter import get_domain_data
 from termgetter import get_term_data
-from snscraper import get_snc_twitter_results, get_snc_facebook_results
+from snscraper import get_snc_instagram_results, get_snc_reddit_term_results
 from alertsetter import set_alert
 
 # API Key functionality
@@ -65,12 +65,11 @@ def alert_endpoint():
     contact = request.form.get('contact')
     scoregt = request.form.get('scoregt')
     scorelt = request.form.get('scorelt')
-    scorechange = request.form.get('scorechange')
 
-    if not term or not channel or not contact or (not scoregt and not scorelt and not scorechange):
+    if not term or not channel or not contact or (not scoregt and not scorelt):
         return jsonify({'error': 'Not enough arguments provided.'}), 400
 
-    result = set_alert(term, channel, contact, scoregt, scorelt, scorechange)
+    result = set_alert(term=term, channel=channel, contact=contact, scoregt=scoregt, scorelt=scorelt)
     return jsonify(result)
 
 @app.route('/snscrape', methods=['GET'])
@@ -78,7 +77,8 @@ def alert_endpoint():
 def snscrape():
     term = request.args.get('term')
     if not term:
-        return "A term must be specified."
+        error_message = "A term must be specified."
+        return jsonify({'error': error_message}), 403
 
     entries = request.args.get('entries')
     if not entries:
@@ -86,28 +86,44 @@ def snscrape():
     else:
         entries = int(entries)
 
-    twitter = request.args.get('twitter')
-    if twitter and twitter.lower() == 'true':
-        twitter = True
+    instagram = request.args.get('instagram')
+    if instagram and instagram.lower() == 'true':
+        instagram = True
     else:
-        twitter = False
+        instagram = False
 
-    facebook = request.args.get('facebook')
-    if facebook and facebook.lower() == 'true':
-        facebook = True
+    reddit = request.args.get('reddit')
+    if reddit and reddit.lower() == 'true':
+        reddit = True
     else:
-        facebook = False
+        reddit = False
+
+    submissions = request.args.get('submissions')
+    if not submissions or (submissions and submissions.lower() == "true"):
+        submissions = True
+    elif submissions and submissions.lower() == 'false':
+        submissions = False
+
+    comments = request.args.get('comments')
+    if not comments or (comments and comments.lower() == "true"):
+        comments = True
+    elif comments and comments.lower() == 'false':
+        comments = False
+
+    if not instagram and not reddit:
+        error_message = "No service selected."
+        return jsonify({'error': error_message}), 403
 
     results = []
-    if twitter:
-        results.extend(get_snc_twitter_results(term, entries))
-    if facebook:
-        results.extend(get_snc_facebook_results(term, entries))
+    if instagram:
+        results.extend(get_snc_instagram_results(term, entries))
+    if reddit:
+        results.extend(get_snc_reddit_term_results(term, entries, submissions, comments))
 
     return jsonify(results)
 
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 # Remove before deploying to render
-#if __name__ == '__main__':
-#    app.run()
+if __name__ == '__main__':
+    app.run()
