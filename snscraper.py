@@ -30,7 +30,7 @@ def get_snc_reddit_term_results(term, entries, submissions, comments):
                 result["url"] = term.url
                 result["link"] = term.link
             data.append(result)
-            if i > entries - 1:
+            if i > entries - 2:
                 break
         return data
     except Exception as e:
