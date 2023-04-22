@@ -10,9 +10,17 @@ def get_wikipedia_data(wiki_word):
     wiki_terms = wiki_response.json()[1]
     wiki_links = wiki_response.json()[3]
     wiki_term_index = 0
-    wiki_results = {}
+    wiki_list = []
+
     for wiki_term in wiki_terms:
-        wiki_results[wiki_term] = wiki_links[wiki_term_index]
+
+        wiki_dict = {
+            "title": wiki_term,
+            "url": wiki_links[wiki_term_index]
+        }
+
         wiki_term_index = wiki_term_index+1
 
-    return(wiki_results)
+        wiki_list.append(wiki_dict)
+
+    return(wiki_list)

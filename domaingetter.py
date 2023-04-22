@@ -21,11 +21,22 @@ def get_domain_data(domain):
     subdomain_data = subdomain_request.text
 
 
-
     domain_data = {
-        "robots_txt": robots_txt,
-        "wayback_machine": wayback_data,
-        "subdomains": subdomain_data
+        "sources":[
+            
+            {
+                "title": "robots_txt",
+                "content": robots_txt
+            },
+            {
+                "title": "wayback_machine",
+                "content": wayback_data
+            },
+            {
+                "title": "subdomains",
+                "content": subdomain_data
+            }
+        ]
     }
 
     return domain_data

@@ -12,8 +12,17 @@ def get_email_data(email):
     pingutil_data = pingutil_response.json()
 
     email_data = {
-        "spycloud" : spycloud_data,
-        "pingutil" : pingutil_data
+        "sources":[
+            
+            {
+                "title": "spycloud",
+                "content": spycloud_data
+            },
+            {
+                "title": "pingutil",
+                "content": pingutil_data
+            }
 
+        ]
     }
     return email_data
