@@ -47,6 +47,10 @@ The news endpoint returns information about news articles and tweets related to 
     "sentiment": float,
     "tweets_text": [string, ...]
   }
+  "wikipedia": {
+    "<title of article>": "<link to article>",
+    ...
+  }
 }
 ```
 ### Domain
