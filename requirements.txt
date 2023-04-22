@@ -4,4 +4,4 @@ textblob
 gunicorn
 requests
 psycopg2
-snscrape
+snscrape == 0.6.2
