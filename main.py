@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from emailgetter import get_email_data
 from domaingetter import get_domain_data
 from termgetter import get_term_data
-from snscraper import get_snc_instagram_results, get_snc_facebook_results
+from snscraper import get_snc_instagram_results, get_snc_reddit_term_results
 from alertsetter import set_alert
 
 # API Key functionality
@@ -92,21 +92,33 @@ def snscrape():
     else:
         instagram = False
 
-    facebook = request.args.get('facebook')
-    if facebook and facebook.lower() == 'true':
-        facebook = True
+    reddit = request.args.get('reddit')
+    if reddit and reddit.lower() == 'true':
+        reddit = True
     else:
-        facebook = False
+        reddit = False
 
-    if not instagram and not facebook:
+    submissions = request.args.get('submissions')
+    if not submissions or (submissions and submissions.lower() == "true"):
+        submissions = True
+    elif submissions and submissions.lower() == 'false':
+        submissions = False
+
+    comments = request.args.get('comments')
+    if not comments or (comments and comments.lower() == "true"):
+        comments = True
+    elif comments and comments.lower() == 'false':
+        comments = False
+
+    if not instagram and not reddit:
         error_message = "No service selected."
         return jsonify({'error': error_message}), 403
 
     results = []
     if instagram:
         results.extend(get_snc_instagram_results(term, entries))
-    if facebook:
-        results.extend(get_snc_facebook_results(term, entries))
+    if reddit:
+        results.extend(get_snc_reddit_term_results(term, entries, submissions, comments))
 
     return jsonify(results)
 
