@@ -9,7 +9,7 @@ from flask_cors import CORS
 from emailgetter import get_email_data
 from domaingetter import get_domain_data
 from termgetter import get_term_data
-from snscraper import get_snc_instagram_results, get_snc_reddit_term_results, get_snc_reddit_user_results
+from snscraper import get_snc_instagram_results, get_snc_reddit_results
 from alertsetter import set_alert
 
 # API Key functionality
@@ -83,8 +83,12 @@ def alert_endpoint():
 def snscrape():
     term = request.args.get('term')
     user = request.args.get('user')
-    if not term and not user:
-        error_message = "A term or user must be specified."
+    subreddit = request.args.get('subreddit')
+    if not term and not user and not subreddit:
+        error_message = "A term, user or subreddit must be specified."
+        return jsonify({'error': error_message}), 403
+    if term and user or term and subreddit or user and subreddit:
+        error_message = "More than one specified: term, user or subreddit."
         return jsonify({'error': error_message}), 403
 
     entries = request.args.get('entries')
@@ -122,12 +126,14 @@ def snscrape():
         return jsonify({'error': error_message}), 403
     
     results = {}
-    if instagram:
-        results["instagram"] = get_snc_instagram_results(term, entries)
-    if reddit and term:
-        results["reddit"] = get_snc_reddit_term_results(term, entries, submissions, comments)
-    if reddit and user:
-        results["reddit"] = get_snc_reddit_user_results(user, entries, submissions, comments)
+    if instagram and user:
+        results["instagram"] = get_snc_instagram_results(user, entries)
+    if reddit and term and not user and not subreddit :
+        results["reddit"] = get_snc_reddit_results(term, entries, submissions, comments, "term")
+    elif reddit and user and not term and not subreddit:
+        results["reddit"] = get_snc_reddit_results(user, entries, submissions, comments, "user")
+    elif reddit and subreddit and not term and not user:
+        results["reddit"] = get_snc_reddit_results(subreddit, entries, submissions, comments, "subreddit")
 
     return jsonify(results)
 
