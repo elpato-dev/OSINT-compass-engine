@@ -2,6 +2,8 @@ import os
 from functools import wraps
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
+from flask_cors import CORS
+
 
 # Importing modules
 from emailgetter import get_email_data
@@ -13,6 +15,10 @@ from alertsetter import set_alert
 # API Key functionality
 load_dotenv()
 app = Flask(__name__)
+
+#allow CORS from all origins
+CORS(app)
+
 API_KEY = os.getenv("API_KEY")
 
 def require_api_key(view_function):
