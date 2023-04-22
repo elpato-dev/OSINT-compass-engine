@@ -66,14 +66,14 @@ def email_endpoint():
 @app.route('/alert', methods=['POST'])
 @require_api_key
 def alert_endpoint():
-    term = request.body.get('term')
-    channel = request.body.get('channel')
-    contact = request.body.get('contact')
-    scoregt = request.body.get('scoregt')
-    scorelt = request.body.get('scorelt')
+    term = request.json['term']
+    channel = request.json['channel']
+    contact = request.json['contact']
+    scoregt = request.json['scoregt']
+    scorelt = request.json['scorelt']
 
-    #if not term or not channel or not contact or (not scoregt and not scorelt):
-        #return jsonify({'error': 'Not enough arguments provided.'}), 400
+    if not term or not channel or not contact or (not scoregt and not scorelt):
+        return jsonify({'error': 'Not enough arguments provided.'}), 400
 
     result = set_alert(term=term, channel=channel, contact=contact, scoregt=scoregt, scorelt=scorelt)
     return jsonify(result)
