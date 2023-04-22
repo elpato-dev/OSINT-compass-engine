@@ -27,7 +27,27 @@ This endpoint returns a welcome message for the OSINT-Compass API.
   - `news_count`: integer (optional, default: 10) - The number of news articles to retrieve.
   - `tweet_count`: integer (optional, default: 10) - The number of tweets to retrieve.
 
-This endpoint searches for the given term and returns news articles and tweets.
+The news endpoint returns information about news articles and tweets related to a specific topic. The structure of the response is as follows:
+
+{
+  "news": {
+    "articles": [
+      {
+        "content": string,
+        "source": string,
+        "title": string,
+        "url": string
+      },
+      ...
+    ],
+    "count": integer,
+    "sentiment": float
+  },
+  "tweets": {
+    "sentiment": float,
+    "tweets_text": [string, ...]
+  }
+}
 
 ### Domain
 
@@ -37,7 +57,23 @@ This endpoint searches for the given term and returns news articles and tweets.
   - `apikey`: string (required) - Your API key.
   - `domain`: string (required) - The domain to get information about.
 
-This endpoint returns information about the given domain.
+The domain endpoint returns information about a specific domain, including its robots.txt content, subdomains, and archived snapshots from the Wayback Machine. The structure of the response is as follows:
+
+{
+  "robots_txt": string,
+  "subdomains": [string, ...],
+  "wayback_machine": {
+    "archived_snapshots": {
+      "closest": {
+        "available": boolean,
+        "status": string,
+        "timestamp": string,
+        "url": string
+      }
+    },
+    "url": string
+  }
+}
 
 ### Email
 
@@ -47,7 +83,40 @@ This endpoint returns information about the given domain.
   - `apikey`: string (required) - Your API key.
   - `email`: string (required) - The email to get information about.
 
-This endpoint returns information about the given email address.
+The email endpoint returns information about an email address, including its deliverability, whether it's disposable or spam, and associated company and executive data. The structure of the response is as follows:
+
+{
+  "pingutil": {
+    "data": {
+      "catch_all": boolean,
+      "deliverable": boolean,
+      "disposable": boolean,
+      "domain": string,
+      "email_address": string,
+      "gibberish": boolean,
+      "spam": boolean,
+      "valid_syntax": boolean,
+      "webmail": boolean
+    },
+    "status": string
+  },
+  "spycloud": {
+    "company": {
+      "discovered": integer,
+      "discovered_unit": string,
+      "name": string,
+      "records": integer
+    },
+    "executives": {
+      "count": integer
+    },
+    "you": {
+      "discovered": integer,
+      "discovered_unit": string,
+      "records": integer
+    }
+  }
+}
 
 ### Alert
 
