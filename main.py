@@ -69,7 +69,7 @@ def alert_endpoint():
     if not term or not channel or not contact or (not scoregt and not scorelt):
         return jsonify({'error': 'Not enough arguments provided.'}), 400
 
-    result = set_alert(term, channel, contact, scoregt, scorelt)
+    result = set_alert(term=term, channel=channel, contact=contact, scoregt=scoregt, scorelt=scorelt)
     return jsonify(result)
 
 @app.route('/snscrape', methods=['GET'])
