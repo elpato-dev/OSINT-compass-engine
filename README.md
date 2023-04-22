@@ -160,12 +160,46 @@ This endpoint sets an alert based on the given term and specified conditions.
 - Method: `GET`
 - Parameters:
   - `apikey`: string (required) - Your API key.
-  - `term`: string (required) - The search term.
-  - `entries`: integer (optional, default: 10) - The number of entries to retrieve.
-  - `instagram`: boolean (optional, default: false) - Whether to search Instagram.
-  - `facebook`: boolean (optional, default: false) - Whether to search Facebook.
+  - `term`: string (optional) - The search term.
+  - `user`: string (optional) - Representing the name of the Reddit user whose submissions and comments you want to retrieve.
+  - `subreddit`: string (optional) - Representing the name of the subreddit whose submissions and comments you want to retrieve.
+  - `entries`: integer (optional) - Representing the number of entries to retrieve. Default is 10.
+  - `reddit`: boolean (required) - Indicating whether to retrieve data from Reddit. Must be set to true.
+  - `submissions`: boolean (optional) - Indicating whether to retrieve submissions. Default is true.
+  - `comments`: boolean (optional) - Indicating whether to retrieve comments. Default is true.
 
-This endpoint searches the specified social media platforms (Instagram and/or Facebook) for the given term and returns the results.
+This endpoint searches the specified social media platforms (Instagram and/or Facebook) for the given term and returns the results. To search on Reddit, you must set at least one of the following to true: `term`, `user`, or `subreddit`.
+```json
+{
+    "reddit": {
+        "results": [
+            {
+                "author": "string",
+                "body": "string",
+                "created": "date",
+                "id": "number",
+                "parentId": "number",
+                "subreddit": "string",
+                "type": "comment",
+                "url": "string"
+            },
+            {
+                "author": "string",
+                "created": "date",
+                "id": "number",
+                "link": "string",
+                "selftext": "string",
+                "subreddit": "string",
+                "title": "string",
+                "type": "submission",
+                "url": "string"
+            }
+        ],
+        "sentiment": "number"
+    }
+}
+
+```
 
 ## Error Handling
 
