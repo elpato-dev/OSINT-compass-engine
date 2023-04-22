@@ -3,3 +3,4 @@ python-dotenv
 textblob
 gunicorn
 requests
+python-psycopg2
