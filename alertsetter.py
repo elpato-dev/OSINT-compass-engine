@@ -38,6 +38,6 @@ def set_alert(term, channel, contact, scoregt=None, scorelt=None):
         cur.close()
         conn.close()
     
-    except:
-        return("An error occured")
+    except Exception as e:
+        return {"error": str(e)}
     
