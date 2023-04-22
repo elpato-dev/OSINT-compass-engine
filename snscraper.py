@@ -1,6 +1,8 @@
 from flask import jsonify
 from snscrape.modules.reddit import RedditSearchScraper
 import snscrape.modules.reddit
+from sentiment_analyzer import get_text_sentiment
+
 
 def get_snc_instagram_results(user, entries):
     # Implementierung der Funktionalität, um Daten von Twitter zu holen
@@ -10,6 +12,7 @@ def get_snc_reddit_term_results(term, entries, submissions, comments):
     try:
         scraper = RedditSearchScraper(term, submissions=submissions, comments=comments)
         data = []
+        results_sentiment = 0
         for i, term in enumerate(scraper.get_items()):
             result = {}
             if type(term) is snscrape.modules.reddit.Comment:
@@ -19,6 +22,9 @@ def get_snc_reddit_term_results(term, entries, submissions, comments):
                 result["created"] = term.date
                 result["subreddit"] = term.subreddit
                 result["url"] = term.url
+                result["parentId"] = term.parentId
+                result["body"] = term.body
+                results_sentiment = results_sentiment + get_text_sentiment(str(term.body))          
             elif type(term) is snscrape.modules.reddit.Submission:
                 result["type"] = "submission"
                 result["title"] = term.title
@@ -29,9 +35,16 @@ def get_snc_reddit_term_results(term, entries, submissions, comments):
                 result["subreddit"] = term.subreddit
                 result["url"] = term.url
                 result["link"] = term.link
+                results_sentiment = results_sentiment + get_text_sentiment(str(term.selftext))
             data.append(result)
+            term_data = {
+                "sentiment" : results_sentiment/entries,
+                "search_results" : data}
+            result_data = {
+                "reddit" : term_data
+            }
             if i > entries - 2:
                 break
-        return data
+        return result_data
     except Exception as e:
         return {"error": str(e)}
