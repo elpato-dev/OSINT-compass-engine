@@ -1,6 +1,4 @@
 from flask import jsonify
-import snscrape.modules.twitter as sntwitter
-import snscrape.modules.mastodon as snmastodon
 
 def get_snc_twitter_results(term, entries):
     # Implementierung der Funktionalität, um Daten von Twitter zu holen
