@@ -78,7 +78,8 @@ def alert_endpoint():
 def snscrape():
     term = request.args.get('term')
     if not term:
-        return "A term must be specified."
+        error_message = "A term must be specified."
+        return jsonify({'error': error_message}), 403
 
     entries = request.args.get('entries')
     if not entries:
@@ -98,6 +99,10 @@ def snscrape():
     else:
         facebook = False
 
+    if not twitter and not facebook:
+        error_message = "No service selected."
+        return jsonify({'error': error_message}), 403
+
     results = []
     if twitter:
         results.extend(get_snc_twitter_results(term, entries))
@@ -109,5 +114,5 @@ def snscrape():
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 # Remove before deploying to render
-#if __name__ == '__main__':
-#    app.run()
+if __name__ == '__main__':
+    app.run()
