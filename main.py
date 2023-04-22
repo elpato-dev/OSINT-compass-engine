@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from emailgetter import get_email_data
 from domaingetter import get_domain_data
 from termgetter import get_term_data
-from snscraper import get_snc_instagram_results, get_snc_reddit_term_results
+from snscraper import get_snc_instagram_results, get_snc_reddit_term_results, get_snc_reddit_user_results
 from alertsetter import set_alert
 
 # API Key functionality
@@ -76,8 +76,9 @@ def alert_endpoint():
 @require_api_key
 def snscrape():
     term = request.args.get('term')
-    if not term:
-        error_message = "A term must be specified."
+    user = request.args.get('user')
+    if not term and not user:
+        error_message = "A term or user must be specified."
         return jsonify({'error': error_message}), 403
 
     entries = request.args.get('entries')
@@ -117,8 +118,10 @@ def snscrape():
     results = []
     if instagram:
         results.append(get_snc_instagram_results(term, entries))
-    if reddit:
+    if reddit and term:
         results.append(get_snc_reddit_term_results(term, entries, submissions, comments))
+    if reddit and user:
+        results.append(get_snc_reddit_user_results(user, entries, submissions, comments))
 
     return jsonify(results)
 
