@@ -1,7 +1,7 @@
 import nltk
 
 nltk.download('punkt')
-
+nltk.download('averaged_perceptron_tagger')
 def get_common_words(text_list):
 
     # Process the articles
