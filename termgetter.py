@@ -1,12 +1,14 @@
 from tweetgetter import get_tweets
 from newsgetter import get_news
 from sentiment_analyzer import get_text_sentiment
+from wikipediagetter import get_wikipedia_data
 
 
 def get_term_data(term, tweet_count=10, news_count=10):
 
     tweets_raw = get_tweets(term, tweet_count)
     news_raw = get_news(term, news_count)
+    wikipedia_data = get_wikipedia_data(term)
     tweets_sentiment = 0
     articles_sentiment = 0
 
@@ -32,6 +34,7 @@ def get_term_data(term, tweet_count=10, news_count=10):
 
 
     term_data = {"tweets": tweets,
-                 "news": news}
+                 "news": news,
+                 "wikipedia": wikipedia_data}
     
     return(term_data)
