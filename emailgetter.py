@@ -1,3 +1,19 @@
+import requests
+
 def get_email_data(email):
-    # Your implementation of get_domain() here.
-    pass
+    
+    # query spycloud
+    spycloud_response = requests.get("https://portal.spycloud.com/endpoint/enriched-stats/" + email)
+    spycloud_data = spycloud_response.json()
+
+    # query pingutil
+
+    pingutil_response = requests.get('https://api.eva.pingutil.com/email?email=' + email, verify=False)
+    pingutil_data = pingutil_response.json()
+
+    email_data = {
+        "spycloud" : spycloud_data,
+        "pingutil" : pingutil_data
+
+    }
+    return email_data
