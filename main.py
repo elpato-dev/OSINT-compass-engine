@@ -9,7 +9,7 @@ from flask_cors import CORS
 from emailgetter import get_email_data
 from domaingetter import get_domain_data
 from termgetter import get_term_data
-from snscraper import get_snc_instagram_results, get_snc_reddit_term_results, get_snc_reddit_user_results
+from snscraper import get_snc_reddit_results
 from alertsetter import set_alert
 
 # API Key functionality
@@ -83,8 +83,12 @@ def alert_endpoint():
 def snscrape():
     term = request.args.get('term')
     user = request.args.get('user')
-    if not term and not user:
-        error_message = "A term or user must be specified."
+    subreddit = request.args.get('subreddit')
+    if not term and not user and not subreddit:
+        error_message = "A term, user or subreddit must be specified."
+        return jsonify({'error': error_message}), 403
+    if term and user or term and subreddit or user and subreddit:
+        error_message = "More than one specified: term, user or subreddit."
         return jsonify({'error': error_message}), 403
 
     entries = request.args.get('entries')
@@ -92,12 +96,6 @@ def snscrape():
         entries = 10
     else:
         entries = int(entries)
-
-    instagram = request.args.get('instagram')
-    if instagram and instagram.lower() == 'true':
-        instagram = True
-    else:
-        instagram = False
 
     reddit = request.args.get('reddit')
     if reddit and reddit.lower() == 'true':
@@ -117,22 +115,22 @@ def snscrape():
     elif comments and comments.lower() == 'false':
         comments = False
 
-    if not instagram and not reddit:
+    if not reddit:
         error_message = "No service selected."
         return jsonify({'error': error_message}), 403
-    
+
     results = {}
-    if instagram:
-        results["instagram"] = get_snc_instagram_results(term, entries)
-    if reddit and term:
-        results["reddit"] = get_snc_reddit_term_results(term, entries, submissions, comments)
-    if reddit and user:
-        results["reddit"] = get_snc_reddit_user_results(user, entries, submissions, comments)
+    if reddit and term and not user and not subreddit :
+        results["reddit"] = get_snc_reddit_results(term, entries, submissions, comments, "term")
+    elif reddit and user and not term and not subreddit:
+        results["reddit"] = get_snc_reddit_results(user, entries, submissions, comments, "user")
+    elif reddit and subreddit and not term and not user:
+        results["reddit"] = get_snc_reddit_results(subreddit, entries, submissions, comments, "subreddit")
 
     return jsonify(results)
 
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 # Remove before deploying to render
-#if __name__ == '__main__':
-#    app.run()
+if __name__ == '__main__':
+    app.run()
