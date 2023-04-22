@@ -28,7 +28,7 @@ This endpoint returns a welcome message for the OSINT-Compass API.
   - `tweet_count`: integer (optional, default: 10) - The number of tweets to retrieve.
 
 The news endpoint returns information about news articles and tweets related to a specific topic. The structure of the response is as follows:
-
+```json
 {
   "news": {
     "articles": [
@@ -48,7 +48,7 @@ The news endpoint returns information about news articles and tweets related to 
     "tweets_text": [string, ...]
   }
 }
-
+```
 ### Domain
 
 - URL: `/domain`
@@ -58,7 +58,7 @@ The news endpoint returns information about news articles and tweets related to 
   - `domain`: string (required) - The domain to get information about.
 
 The domain endpoint returns information about a specific domain, including its robots.txt content, subdomains, and archived snapshots from the Wayback Machine. The structure of the response is as follows:
-
+```json
 {
   "robots_txt": string,
   "subdomains": [string, ...],
@@ -74,6 +74,7 @@ The domain endpoint returns information about a specific domain, including its r
     "url": string
   }
 }
+```
 
 ### Email
 
@@ -84,7 +85,7 @@ The domain endpoint returns information about a specific domain, including its r
   - `email`: string (required) - The email to get information about.
 
 The email endpoint returns information about an email address, including its deliverability, whether it's disposable or spam, and associated company and executive data. The structure of the response is as follows:
-
+```json
 {
   "pingutil": {
     "data": {
@@ -117,6 +118,7 @@ The email endpoint returns information about an email address, including its del
     }
   }
 }
+```
 
 ### Alert
 
