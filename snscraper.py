@@ -1,12 +1,9 @@
 from flask import jsonify
-from snscrape.modules.reddit import RedditSearchScraper, RedditUserScraper
+from snscrape.modules.reddit import RedditSearchScraper, RedditUserScraper, RedditSubredditScraper
 import snscrape.modules.reddit
+from snscrape.modules.mastodon import MastodonProfileScraper
+import snscrape.modules.mastodon
 from sentiment_analyzer import get_text_sentiment
-
-
-def get_snc_instagram_results(user, entries):
-    # Implementierung der Funktionalität, um Daten von Twitter zu holen
-    return ('success : instagram data.')
 
 def get_snc_reddit_results(term, entries, submissions, comments, searchtype):
     try:
@@ -15,7 +12,7 @@ def get_snc_reddit_results(term, entries, submissions, comments, searchtype):
         elif searchtype == "user":
             scraper = RedditUserScraper(name=term, submissions=submissions, comments=comments)
         elif searchtype == "subreddit":
-            scraper = RedditUserScraper(name=term, submissions=submissions, comments=comments)
+            scraper = RedditSubredditScraper(name=term, submissions=submissions, comments=comments)
         data = []
         results_sentiment = 0
         sentiment_count = 0

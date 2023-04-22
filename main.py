@@ -9,7 +9,7 @@ from flask_cors import CORS
 from emailgetter import get_email_data
 from domaingetter import get_domain_data
 from termgetter import get_term_data
-from snscraper import get_snc_instagram_results, get_snc_reddit_results
+from snscraper import get_snc_reddit_results
 from alertsetter import set_alert
 
 # API Key functionality
@@ -97,12 +97,6 @@ def snscrape():
     else:
         entries = int(entries)
 
-    instagram = request.args.get('instagram')
-    if instagram and instagram.lower() == 'true':
-        instagram = True
-    else:
-        instagram = False
-
     reddit = request.args.get('reddit')
     if reddit and reddit.lower() == 'true':
         reddit = True
@@ -121,13 +115,11 @@ def snscrape():
     elif comments and comments.lower() == 'false':
         comments = False
 
-    if not instagram and not reddit:
+    if not reddit:
         error_message = "No service selected."
         return jsonify({'error': error_message}), 403
-    
+
     results = {}
-    if instagram and user:
-        results["instagram"] = get_snc_instagram_results(user, entries)
     if reddit and term and not user and not subreddit :
         results["reddit"] = get_snc_reddit_results(term, entries, submissions, comments, "term")
     elif reddit and user and not term and not subreddit:
@@ -140,5 +132,5 @@ def snscrape():
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 # Remove before deploying to render
-#if __name__ == '__main__':
-#    app.run()
+if __name__ == '__main__':
+    app.run()
