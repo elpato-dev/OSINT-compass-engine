@@ -6,3 +6,4 @@ requests
 psycopg2
 snscrape == 0.6.2.20230320
 flask-cors
+nltk

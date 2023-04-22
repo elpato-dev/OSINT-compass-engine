@@ -2,6 +2,7 @@ from tweetgetter import get_tweets
 from newsgetter import get_news
 from sentiment_analyzer import get_text_sentiment
 from wikipediagetter import get_wikipedia_data
+from common_words_getter import get_common_words
 
 
 def get_term_data(term, tweet_count=10, news_count=10):
@@ -32,9 +33,22 @@ def get_term_data(term, tweet_count=10, news_count=10):
         "sentiment": articles_sentiment/news_count
     }
 
+    textlist = []
+
+    for tweet_text in tweets_raw:
+        textlist.append(tweet_text)
+    
+    for article_text in news_raw["articles"]:
+        if "We use cookies" not in article_text["content"]:
+            textlist.append(article_text["content"])
+        textlist.append(article_text["title"])
+
+    common_words = get_common_words(textlist)
+
 
     term_data = {"tweets": tweets,
                  "news": news,
-                 "wikipedia": wikipedia_data}
+                 "wikipedia": wikipedia_data,
+                 "common_words": common_words}
     
     return(term_data)
