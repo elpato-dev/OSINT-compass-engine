@@ -41,4 +41,3 @@ def set_alert(term, channel, contact, scoregt=None, scorelt=None):
     except:
         return("An error occured")
     
-set_alert("america", "telegram", "test123", None, 0.5)
