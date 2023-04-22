@@ -65,12 +65,11 @@ def alert_endpoint():
     contact = request.form.get('contact')
     scoregt = request.form.get('scoregt')
     scorelt = request.form.get('scorelt')
-    scorechange = request.form.get('scorechange')
 
-    if not term or not channel or not contact or (not scoregt and not scorelt and not scorechange):
+    if not term or not channel or not contact or (not scoregt and not scorelt):
         return jsonify({'error': 'Not enough arguments provided.'}), 400
 
-    result = set_alert(term, channel, contact, scoregt, scorelt, scorechange)
+    result = set_alert(term, channel, contact, scoregt, scorelt)
     return jsonify(result)
 
 @app.route('/snscrape', methods=['GET'])
