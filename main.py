@@ -113,12 +113,12 @@ def snscrape():
     if not instagram and not reddit:
         error_message = "No service selected."
         return jsonify({'error': error_message}), 403
-
+    
     results = []
     if instagram:
-        results.extend(get_snc_instagram_results(term, entries))
+        results.append(get_snc_instagram_results(term, entries))
     if reddit:
-        results.extend(get_snc_reddit_term_results(term, entries, submissions, comments))
+        results.append(get_snc_reddit_term_results(term, entries, submissions, comments))
 
     return jsonify(results)
 
