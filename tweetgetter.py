@@ -25,6 +25,9 @@ def connect_to_endpoint(url, params):
 
 
 def get_tweets(twitter_word, tweet_count=10):
+
+    if bearer_token == None:
+        return({})
     json_response = connect_to_endpoint(search_url, {'query': twitter_word, 'max_results': tweet_count})
 
     cleaned_tweets =[]
