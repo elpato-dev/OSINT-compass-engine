@@ -72,8 +72,8 @@ def alert_endpoint():
     scoregt = request.form.get('scoregt')
     scorelt = request.form.get('scorelt')
 
-    if not term or not channel or not contact or (not scoregt and not scorelt):
-        return jsonify({'error': 'Not enough arguments provided.'}), 400
+    #if not term or not channel or not contact or (not scoregt and not scorelt):
+        #return jsonify({'error': 'Not enough arguments provided.'}), 400
 
     result = set_alert(term=term, channel=channel, contact=contact, scoregt=scoregt, scorelt=scorelt)
     return jsonify(result)
