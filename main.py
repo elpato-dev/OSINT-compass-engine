@@ -109,5 +109,5 @@ def snscrape():
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 # Remove before deploying to render
-if __name__ == '__main__':
-    app.run()
+#if __name__ == '__main__':
+#    app.run()
