@@ -47,8 +47,9 @@ The news endpoint returns information about news articles and tweets related to 
     "sentiment": float,
     "tweets_text": [string, ...]
   }
-  "wikipedia": {
-    "<title of article>": "<link to article>",
+  "wikipedia": [
+    {"<title of article>": "<link to article>"}, ...
+    ]
     ...
   }
 }
@@ -64,19 +65,31 @@ The news endpoint returns information about news articles and tweets related to 
 The domain endpoint returns information about a specific domain, including its robots.txt content, subdomains, and archived snapshots from the Wayback Machine. The structure of the response is as follows:
 ```json
 {
-  "robots_txt": string,
-  "subdomains": [string, ...],
-  "wayback_machine": {
-    "archived_snapshots": {
-      "closest": {
-        "available": boolean,
-        "status": string,
-        "timestamp": string,
-        "url": string
-      }
+"sources": [
+    {
+        "title": "robots_txt",
+        "content": string
     },
-    "url": string
-  }
+    {
+        "title": "wayback_machine",
+        "content": {
+            "archived_snapshots": {
+                "closest": {
+                    "available": boolean,
+                    "status": string,
+                    "timestamp": string,
+                    "url": string
+                }
+            },
+            "url": string
+        }
+    },
+    {
+        "title": "subdomains",
+        "content": [string, ...
+        ]
+    }
+]
 }
 ```
 
@@ -91,6 +104,7 @@ The domain endpoint returns information about a specific domain, including its r
 The email endpoint returns information about an email address, including its deliverability, whether it's disposable or spam, and associated company and executive data. The structure of the response is as follows:
 ```json
 {
+"sources":[
   "pingutil": {
     "data": {
       "catch_all": boolean,
@@ -111,16 +125,16 @@ The email endpoint returns information about an email address, including its del
       "discovered_unit": string,
       "name": string,
       "records": integer
-    },
-    "executives": {
+     },
+     "executives": {
       "count": integer
-    },
-    "you": {
+     },
+     "you": {
       "discovered": integer,
       "discovered_unit": string,
       "records": integer
     }
-  }
+  ]
 }
 ```
 
