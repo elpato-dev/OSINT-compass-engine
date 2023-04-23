@@ -69,29 +69,29 @@ The domain endpoint returns information about a specific domain, including its r
 {
 "sources": [
     {
-        "title": "robots_txt",
-        "content": string
+      "title": "robots_txt",
+      "content": string
     },
     {
-        "title": "wayback_machine",
-        "content": {
-            "archived_snapshots": {
-                "closest": {
-                    "available": boolean,
-                    "status": string,
-                    "timestamp": string,
-                    "url": string
-                }
-            },
+      "title": "wayback_machine",
+      "content": {
+        "archived_snapshots": {
+          "closest": {
+            "available": boolean,
+            "status": string,
+            "timestamp": string,
             "url": string
-        }
+          }
+        },
+        "url": string
+      }
     },
     {
-        "title": "subdomains",
-        "content": [string, ...
-        ]
+      "title": "subdomains",
+      "content": [string, ...
+      ]
     }
-]
+  ]
 }
 ```
 
