@@ -169,7 +169,7 @@ This endpoint sets an alert based on the given term and specified conditions.
   - `submissions`: boolean (optional) - Indicating whether to retrieve submissions. Default is true.
   - `comments`: boolean (optional) - Indicating whether to retrieve comments. Default is true.
 
-This endpoint searches the specified social media platforms (Instagram and/or Facebook) for the given term and returns the results. To search on Reddit, you must set at least one of the following to true: `term`, `user`, or `subreddit`.
+This endpoint searches the specified social media platforms (only Reddit at the moment) for the given term and returns the results. To search on Reddit, you must set at least one of the following to true: `term`, `user`, or `subreddit`.
 ```javascript
 {
 "sources": [
