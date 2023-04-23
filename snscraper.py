@@ -45,8 +45,10 @@ def get_snc_reddit_results(term, entries, submissions, comments, searchtype):
             if i > entries - 2:
                 break
         term_data = {
+            "content" : data,
             "sentiment" : results_sentiment/sentiment_count,
-            "results" : data}
+            "title": "reddit"
+            }
         return term_data
     except Exception as e:
         return {"error": str(e)}
