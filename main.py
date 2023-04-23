@@ -119,13 +119,17 @@ def snscrape():
         error_message = "No service selected."
         return jsonify({'error': error_message}), 403
 
-    results = {}
+    sources = {}
     if reddit and term and not user and not subreddit :
-        results["reddit"] = get_snc_reddit_results(term, entries, submissions, comments, "term")
+        sources["reddit"] = get_snc_reddit_results(term, entries, submissions, comments, "term")
     elif reddit and user and not term and not subreddit:
-        results["reddit"] = get_snc_reddit_results(user, entries, submissions, comments, "user")
+        sources["reddit"] = get_snc_reddit_results(user, entries, submissions, comments, "user")
     elif reddit and subreddit and not term and not user:
-        results["reddit"] = get_snc_reddit_results(subreddit, entries, submissions, comments, "subreddit")
+        sources["reddit"] = get_snc_reddit_results(subreddit, entries, submissions, comments, "subreddit")
+
+    results = {
+        "sources": sources
+    }
 
     return jsonify(results)
 
