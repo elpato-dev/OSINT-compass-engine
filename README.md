@@ -2,9 +2,9 @@
 
 ## Overview
 
-OSINT-compass Engine is an API that provides open-source intelligence (OSINT) information by aggregating data from various sources such as term searches, domain information, email data, and social media.
+OSINT-compass Engine is an API that provides open-source intelligence (OSINT) information by aggregating data from various sources such as term searches, domain information, email data, and social media. It is part of the open source tool OSINT-compass.
 
-The main project can be found [here](https://github.com/elpato-dev/OSINT-compass)
+The main project can be found [here](https://github.com/elpato-dev/OSINT-compass).
 
 ## Getting Started
 
