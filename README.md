@@ -1,4 +1,4 @@
-# OSINT-compass API Documentation
+# OSINT-compass Engine - API Documentation
 
 ## Overview
 
