@@ -1,0 +1,8 @@
+API_KEY=<api key protecting OSINT-compass API>
+BEARER_TOKEN=<Twitter API BEARER_TOKEN>
+NEWS_API_TOKEN=<token for newsapi.org>
+DB_NAME=<database name of postgres database>
+DB_USER=<database username of postgres database>
+DB_PASSWORD=<database password of postgres database>
+DB_HOST=<database histname of postgres database>
+DB_PORT=<database port of postgres database>
