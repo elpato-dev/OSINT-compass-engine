@@ -30,7 +30,7 @@ This endpoint returns a welcome message for the OSINT-compass API.
   - `tweet_count`: integer (optional, default: 10) - The number of tweets to retrieve.
 
 The news endpoint returns information about news articles and tweets related to a specific topic. The structure of the response is as follows:
-```json
+```javascript
 {
   "news": {
     "articles": [
@@ -65,7 +65,7 @@ The news endpoint returns information about news articles and tweets related to 
   - `domain`: string (required) - The domain to get information about.
 
 The domain endpoint returns information about a specific domain, including its robots.txt content, subdomains, and archived snapshots from the Wayback Machine. The structure of the response is as follows:
-```json
+```javascript
 {
 "sources": [
     {
@@ -104,7 +104,7 @@ The domain endpoint returns information about a specific domain, including its r
   - `email`: string (required) - The email to get information about.
 
 The email endpoint returns information about an email address, including its deliverability, whether it's disposable or spam, and associated company and executive data. The structure of the response is as follows:
-```json
+```javascript
 {
 "sources":[
   "pingutil": {
@@ -169,33 +169,33 @@ This endpoint sets an alert based on the given term and specified conditions.
   - `comments`: boolean (optional) - Indicating whether to retrieve comments. Default is true.
 
 This endpoint searches the specified social media platforms (Instagram and/or Facebook) for the given term and returns the results. To search on Reddit, you must set at least one of the following to true: `term`, `user`, or `subreddit`.
-```json
+```javascript
 {
     "reddit": {
         "results": [
             {
-                "author": "string",
-                "body": "string",
-                "created": "date",
-                "id": "number",
-                "parentId": "number",
-                "subreddit": "string",
+                "author": string,
+                "body": string,
+                "created": date,
+                "id": number,
+                "parentId": number,
+                "subreddit": string,
                 "type": "comment",
-                "url": "string"
+                "url": string
             },
             {
-                "author": "string",
-                "created": "date",
-                "id": "number",
-                "link": "string",
-                "selftext": "string",
-                "subreddit": "string",
-                "title": "string",
+                "author": string,
+                "created": date,
+                "id": number,
+                "link": string,
+                "selftext": string,
+                "subreddit": string,
+                "title": string,
                 "type": "submission",
-                "url": "string"
+                "url": string
             }
         ],
-        "sentiment": "number"
+        "sentiment": number
     }
 }
 
