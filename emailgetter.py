@@ -16,7 +16,11 @@ def get_email_data(email):
             
             {
                 "title": "spycloud",
-                "content": spycloud_data
+                "content": {
+                    "email_address": spycloud_data["you"],
+                    "email_domain": spycloud_data["company"]
+
+                }
             },
             {
                 "title": "pingutil",
