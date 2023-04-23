@@ -1,8 +1,8 @@
-# OSINT-Compass API Documentation
+# OSINT-compass API Documentation
 
 ## Overview
 
-OSINT-Compass is an API that provides open-source intelligence (OSINT) information by aggregating data from various sources such as term searches, domain information, email data, and social media.
+OSINT-compass is an API that provides open-source intelligence (OSINT) information by aggregating data from various sources such as term searches, domain information, email data, and social media.
 
 The main project can be found [here](https://github.com/elpato-dev/OSINT-compass)
 
@@ -17,7 +17,7 @@ In order to use the API, you will need a valid API key. The API key is passed as
 - URL: `/`
 - Method: `GET`
 
-This endpoint returns a welcome message for the OSINT-Compass API.
+This endpoint returns a welcome message for the OSINT-compass API.
 
 ### Term
 
@@ -207,7 +207,7 @@ When an error occurs, the API will return a JSON object with an `error` key cont
 
 ## Example
 
-To get term data using the OSINT-Compass API:
+To get term data using the OSINT-compass API:
 
 ```plaintext
 GET /term?apikey=<your-api-key>&term=brazil
