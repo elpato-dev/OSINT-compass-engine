@@ -171,32 +171,35 @@ This endpoint sets an alert based on the given term and specified conditions.
 This endpoint searches the specified social media platforms (Instagram and/or Facebook) for the given term and returns the results. To search on Reddit, you must set at least one of the following to true: `term`, `user`, or `subreddit`.
 ```javascript
 {
-    "reddit": {
-        "results": [
-            {
-                "author": string,
-                "body": string,
-                "created": date,
-                "id": number,
-                "parentId": number,
-                "subreddit": string,
-                "type": "comment",
-                "url": string
-            },
-            {
-                "author": string,
-                "created": date,
-                "id": number,
-                "link": string,
-                "selftext": string,
-                "subreddit": string,
-                "title": string,
-                "type": "submission",
-                "url": string
-            }
+"sources": [
+  {
+    "content": [
+      {
+        "author": string,
+        "body": string,
+        "created": date,
+        "id": number,
+        "parentId": number,
+        "subreddit": string,
+        "type": "comment",
+        "url": string
+      },
+      {
+        "author": string,
+        "created": date,
+        "id": number,
+        "link": string,
+        "selftext": string,
+        "subreddit": string,
+        "title": string,
+        "type": "submission",
+        "url": string
+      }
         ],
         "sentiment": number
+        "title": string
     }
+  ]
 }
 
 ```
