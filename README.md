@@ -146,6 +146,7 @@ The email endpoint returns information about an email address, including its del
 - Method: `POST`
 - Parameters:
   - `apikey`: string (required) - Your API key.
+- JSON body:
   - `term`: string (required) - The search term.
   - `channel`: string (required) - The communication channel for alerts (currently only Telegram).
   - `contact`: string (required) - The contact information for the channel (the Telegram chat id).
